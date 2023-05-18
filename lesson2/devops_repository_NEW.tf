@@ -10,7 +10,6 @@ resource "oci_devops_repository" "FoggyKitchenGitHubRepository" {
     name            = var.github_repository_name
     project_id      = oci_devops_project.FoggyKitchenDevOpsProject.id
     repository_type = "MIRRORED"
-    default_branch  = "main"
     description     = "FoggyKitchenGitHubRepository"
     
     mirror_repository_config {
