@@ -60,3 +60,40 @@ resource "oci_devops_build_pipeline_stage" "FoggyKitchenDevOpsProjectBuildPipeli
     wait_type     = "ABSOLUTE_WAIT"
   }
 }
+
+resource "oci_devops_build_pipeline_stage" "FoggyKitchenDevOpsProjectBuildPipelineDeliverArtifactStage" {
+  provider   = oci.targetregion
+  depends_on = [oci_devops_build_pipeline_stage.FoggyKitchenDevOpsProjectBuildPipelineBuildStage]
+
+  build_pipeline_id         = oci_devops_build_pipeline.FoggyKitchenDevOpsProjectBuildPipeline.id
+  build_pipeline_stage_type = "DELIVER_ARTIFACT"
+  display_name              = "FoggyKitchenDevOpsProjectBuildPipelineDeliverArtifactStage"
+  description               = "FoggyKitchen DevOps Project Build Pipeline Deliver Artifact Stage"
+
+  build_pipeline_stage_predecessor_collection {
+    items {
+      id = oci_devops_build_pipeline_stage.FoggyKitchenDevOpsProjectBuildPipelineBuildStage.id
+    }
+  }
+  deliver_artifact_collection {
+    items {
+      artifact_id   = oci_devops_deploy_artifact.FoggyKitchenDevOpsProjectDeployArtifact.id
+      artifact_name = "APPLICATION_DOCKER_IMAGE"
+    }
+  }
+}
+
+resource "oci_devops_deploy_artifact" "FoggyKitchenDevOpsProjectDeployArtifact" {
+  provider                   = oci.targetregion
+  argument_substitution_mode = "SUBSTITUTE_PLACEHOLDERS"
+  deploy_artifact_type       = "DOCKER_IMAGE"
+  project_id                 = oci_devops_project.FoggyKitchenDevOpsProject.id
+  display_name               = oci_artifacts_container_repository.FoggyKitchenDevOpsProjectContainerRepository.display_name
+
+  deploy_artifact_source {
+    deploy_artifact_source_type = "OCIR"
+    image_uri                   = "${local.ocir_docker_repository}/${local.ocir_namespace}/${oci_artifacts_container_repository.FoggyKitchenDevOpsProjectContainerRepository.display_name}:0.1.0-$${BUILDRUN_HASH}"
+    image_digest                = " "
+    repository_id               = oci_devops_repository.FoggyKitchenGitHubRepository.id
+  }
+}

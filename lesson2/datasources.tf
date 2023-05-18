@@ -17,4 +17,7 @@ data "oci_identity_regions" "oci_regions" {
 
 }
 
+data "oci_objectstorage_namespace" "objectstorage_namespace" {
+  compartment_id = var.tenancy_ocid
+}
 
