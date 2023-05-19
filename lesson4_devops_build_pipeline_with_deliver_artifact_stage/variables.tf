@@ -10,7 +10,7 @@ variable "network_cidrs" {
 
   default = {
     VCN-CIDR                 = "10.20.0.0/16"
-    DEVOPS-BUILD-SUBNET-CIDR = "10.20.30.0/24"
+    DEVOPS-BUILD-SUBNET-CIDR = "10.20.40.0/24"
     ALL-CIDR                 = "0.0.0.0/0"
   }
 }

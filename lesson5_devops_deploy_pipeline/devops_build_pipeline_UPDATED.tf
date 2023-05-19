@@ -83,3 +83,24 @@ resource "oci_devops_build_pipeline_stage" "FoggyKitchenDevOpsProjectBuildPipeli
   }
 }
 
+# 
+# Added new stage to Build Pipeline - triggering Deploy Pipeline.
+#
+
+resource "oci_devops_build_pipeline_stage" "FoggyKitchenDevOpsProjectBuildPipelineDeployStage" {
+  provider   = oci.targetregion
+  depends_on = [oci_devops_build_pipeline_stage.FoggyKitchenDevOpsProjectBuildPipelineDeliverArtifactStage]
+
+  build_pipeline_id         = oci_devops_build_pipeline.FoggyKitchenDevOpsProjectBuildPipeline.id
+  build_pipeline_stage_type = "TRIGGER_DEPLOYMENT_PIPELINE"
+  display_name              = "FoggyKitchenDevOpsProjectBuildPipelineDeployStage"
+
+  build_pipeline_stage_predecessor_collection {
+    items {
+      id = oci_devops_build_pipeline_stage.FoggyKitchenDevOpsProjectBuildPipelineDeliverArtifactStage.id
+    }
+  }
+
+  deploy_pipeline_id             = oci_devops_deploy_pipeline.FoggyKitchenDevOpsProjectDeployPipeline.id
+  is_pass_all_parameters_enabled = true 
+}
