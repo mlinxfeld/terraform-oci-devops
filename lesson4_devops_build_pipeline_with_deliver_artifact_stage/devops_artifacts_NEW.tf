@@ -18,8 +18,7 @@ resource "oci_devops_deploy_artifact" "FoggyKitchenDevOpsProjectDeployArtifact" 
 
   deploy_artifact_source {
     deploy_artifact_source_type = "OCIR"
-    image_uri                   = "${local.ocir_docker_repository}/${local.ocir_namespace}/${oci_artifacts_container_repository.FoggyKitchenDevOpsProjectContainerRepository.display_name}:0.1.0-$${BUIL
-DRUN_HASH}"
+    image_uri                   = "${local.ocir_docker_repository}/${local.ocir_namespace}/${oci_artifacts_container_repository.FoggyKitchenDevOpsProjectContainerRepository.display_name}:0.1.0-$${BUILDRUN_HASH}"
     image_digest                = " "
     repository_id               = oci_devops_repository.FoggyKitchenGitHubRepository.id
   }
