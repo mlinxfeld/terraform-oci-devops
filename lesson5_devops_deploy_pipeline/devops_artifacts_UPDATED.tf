@@ -37,7 +37,8 @@ resource "oci_devops_deploy_artifact" "FoggyKitchenDevOpsProjectDeployHelmArtifa
   deploy_artifact_source {
     deploy_artifact_source_type = "HELM_CHART"
     chart_url                   = "oci://${local.ocir_docker_repository}/${local.ocir_namespace}/${var.helm_repo_name}/${var.release_name}/${var.release_name}"
-    deploy_artifact_version     = "0.1.0-$${BUILDRUN_HASH}"
+#    deploy_artifact_version     = "0.1.0-$${BUILDRUN_HASH}"
+    deploy_artifact_version     = "0.1.0"
   }
 }
 

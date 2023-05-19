@@ -32,7 +32,7 @@ locals {
   kubernetes_version         = substr(var.kubernetes_version,1,6)
 
   oracle_linux_images        = [
-    for source in local.all_sources : source.image_id if length(regexall("Oracle-Linux-${var.oke_node_os_version}-${local.arm_node_shape}[0-9][0-9][0-9][0-9].+-0-OKE-${local.kubernetes_version}-[0-9]+", source.source_name)) > 0
+    for source in local.all_sources : source.image_id if length(regexall("Oracle-Linux-${var.oke_node_os_version}-${local.arm_node_shape}[0-9][0-9][0-9][0-9].+-1-OKE-${local.kubernetes_version}-[0-9]+", source.source_name)) > 0
   ]
 
 
