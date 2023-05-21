@@ -27,7 +27,7 @@ resource "oci_devops_deploy_artifact" "FoggyKitchenDevOpsProjectDeployArtifact" 
 # Added Artifacts for Helm and Image Container in OCIR.
 
 resource "oci_devops_deploy_artifact" "FoggyKitchenDevOpsProjectDeployHelmArtifact" {
-  count                      = var.oke_target_environment ? 1 : 0
+#  count                      = var.oke_target_environment ? 1 : 0
   provider                   = oci.targetregion
   project_id                 = oci_devops_project.FoggyKitchenDevOpsProject.id
   display_name               = "FoggyKitchenDevOpsProjectDeployArtifact"

@@ -63,7 +63,9 @@ variable "availablity_domain_name" {
 }
 
 variable "kubernetes_version" {
-  default = "v1.26.2"
+  #default = "v1.26.2"
+  default = "v1.25.4"
+  #default = "v1.24.1"
 }
 
 variable "node_pool_size" {
@@ -71,7 +73,7 @@ variable "node_pool_size" {
 }
 
 variable "oke_node_shape" {
-  default = "VM.Standard.A1.Flex"
+  default = "VM.Standard.E4.Flex"
 }
 
 variable "oke_node_os_version" {

@@ -29,7 +29,8 @@ resource "oci_devops_deploy_stage" "FoggyKitchenDevOpsProjectDeployPipelineHelmS
   deploy_stage_type                 = "OKE_HELM_CHART_DEPLOYMENT"
   release_name                      = var.release_name
   values_artifact_ids               = [oci_devops_deploy_artifact.FoggyKitchenDevOpsDeployValuesYamlArtifact[0].id]
-  helm_chart_deploy_artifact_id     = oci_devops_deploy_artifact.FoggyKitchenDevOpsProjectDeployHelmArtifact[0].id
+  #helm_chart_deploy_artifact_id     = oci_devops_deploy_artifact.FoggyKitchenDevOpsProjectDeployHelmArtifact[0].id
+  helm_chart_deploy_artifact_id     = oci_devops_deploy_artifact.FoggyKitchenDevOpsProjectDeployHelmArtifact.id
   oke_cluster_deploy_environment_id = oci_devops_deploy_environment.FoggyKitchenDevOpsOKEEnvironment[0].id
 }
 
