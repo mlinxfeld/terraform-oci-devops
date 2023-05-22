@@ -1,0 +1,76 @@
+title: "FoggyKitchen OCI DevOps Service with Terraform - Lesson 2: Mirroring GitHub Repository into DevOps Project."
+description: "In the second lesson, you will discover how to mirror a GitHub repository into your DevOps project. By establishing an external connection and periodically synchronizing changes, you can seamlessly integrate your GitHub repository with the DevOps project."
+stackDescription: "In the second lesson, you will discover how to mirror a GitHub repository into your DevOps project. By establishing an external connection and periodically synchronizing changes, you can seamlessly integrate your GitHub repository with the DevOps project."
+schemaVersion: 1.1.0
+version: "20201028"
+locale: "en"
+
+variableGroups:
+- title: "General Configuration"
+  visible: false
+  variables:
+  - tenancy_ocid
+  - region
+
+- title: "Required Configuration"
+  visible: true  
+  variables:
+  - compartment_ocid
+  - project_logging_config_retention_period_in_days
+  - github_pat_vault_secret_id
+  - github_repository_name
+  - github_repository_url
+ 
+variables:
+
+  # General Configuration
+  tenancy_ocid:
+    title: "Tenancy ID"
+    description: "The Oracle Cloud Identifier (OCID) for your tenancy"
+    type: string
+    required: true
+    visibile: false
+
+  region:
+    title: "Region"
+    description: "Choose Region for your OCI DevOps Project"
+    type: oci:identity:region:name
+    required: true
+    visibile: true
+
+  compartment_ocid:
+    title: "Compartment OCID"
+    description: "Choose Comparment for your OCI DevOps Project"
+    type: oci:identity:compartment:id
+    required: true
+    visibile: true
+
+  project_logging_config_retention_period_in_days:
+    type: number
+    required: true
+    minimum: 1
+    maximum: 365
+    multipleOf: 1
+    default: 30
+    title: "OCI DevOps Project Logging Config Retention (in days)"
+    description: "Choose number of days for OCI DevOps Project Logging Config Retention."
+
+  github_pat_vault_secret_id:
+    type: string
+    required: true
+    title: "OCI Vault Secret with GitHub PAT"
+    description: "Enter OCI Vault Secret with GitHub Personal Access Token (PAT)."
+
+  github_repository_name:
+    type: string
+    required: true
+    title: "GitHub Repository Name"
+    description: "Enter GitHub Repository Name (will be used for the name of OCI DevOps Repository mirror)."
+
+  github_repository_url:
+    type: string
+    required: true
+    title: "GitHub Repository URL"
+    description: "Enter GitHub Private Repository URL (will be mirrord to OCI DevOps Repository resource)."
+
+
