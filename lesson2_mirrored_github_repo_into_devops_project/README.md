@@ -2,7 +2,7 @@
 
 ## LESSON 2 - Mirror GitHub Repository into DevOps Project
 
-n the second lesson of the OCI DevOps Service course deployed with Terraform, you will learn how to mirror a GitHub repository into your DevOps project. This lesson focuses on creating an external connection to a GitHub private repository using a Personal Access Token (PAT) stored in OCI Vault.
+In the second lesson of the OCI DevOps Service course deployed with Terraform, you will learn how to mirror a GitHub repository into your DevOps project. This lesson focuses on creating an external connection to a GitHub private repository using a Personal Access Token (PAT) stored in OCI Vault.
 
 By following the provided Terraform code, you will establish a secure connection between your DevOps project and the GitHub repository. The PAT stored in OCI Vault ensures the authentication and authorization required for accessing the private repository.
 
@@ -44,7 +44,7 @@ Martin-MacBook-Pro:~ martinlinxfeld$ git clone https://github.com/mlinxfeld/terr
 
 Martin-MacBook-Pro:~ martinlinxfeld$ cd terraform-oci-devops/
 
-Martin-MacBook-Pro:terraform-oci-devops martinlinxfeld$ cd lesson1_empty_devops_project
+Martin-MacBook-Pro:terraform-oci-devops martinlinxfeld$ cd lesson2_mirrored_github_repo_into_devops_project
 
 ```
 
@@ -52,7 +52,7 @@ Martin-MacBook-Pro:terraform-oci-devops martinlinxfeld$ cd lesson1_empty_devops_
 Create environment file with TF_VARs:
 
 ```
-Martin-MacBook-Pro:lesson1_empty_devops_project martinlinxfeld$ vi setup_oci_tf_vars.sh
+Martin-MacBook-Pro:lesson2_mirrored_github_repo_into_devops_project martinlinxfeld$ vi setup_oci_tf_vars.sh
 
 export TF_VAR_tenancy_ocid="ocid1.tenancy.oc1..aaaaaaaasbkty(...)heqzzxn7pe64ksbia"
 export TF_VAR_compartment_ocid="ocid1.compartment.oc1..aaaaaaaaiyy4srmrb32(...)ytywiucgbcp5ext6e4ahjewa"
@@ -61,26 +61,25 @@ export TF_VAR_fingerprint="85:ee:(...)37:b8:0d:0f:ea"
 export TF_VAR_private_key_path="/home/opc/.oci/oci_api_key.pem"
 export TF_VAR_region="eu-frankfurt-1"
 export TF_VAR_github_pat_vault_secret_id="ocid1.vaultsecret.oc1.eu-frankfurt-1.amaaaaaadngk4gia426(...)ygv5x6ooa"
-export TF_VAR_ocir_vault_secret_id="ocid1.vaultsecret.oc1.eu-frankfurt-1.amaaaaaadngk4giavvri7prkglx7gy5ip73q4(...)anih3lqfxhoa"
 
-Martin-MacBook-Pro:lesson1_empty_devops_project martinlinxfeld$ source setup_oci_tf_vars.sh
+Martin-MacBook-Pro:lesson2_mirrored_github_repo_into_devops_project martinlinxfeld$ source setup_oci_tf_vars.sh
 ```
 
 ### Create the Resources
 Run the following commands:
 
 ```
-Martin-MacBook-Pro:lesson1_empty_devops_project martinlinxfeld$ terraform init
+Martin-MacBook-Pro:lesson2_mirrored_github_repo_into_devops_project martinlinxfeld$ terraform init
     
-Martin-MacBook-Pro:lesson1_empty_devops_project martinlinxfeld$ terraform plan
+Martin-MacBook-Pro:lesson2_mirrored_github_repo_into_devops_project martinlinxfeld$ terraform plan
 
-Martin-MacBook-Pro:lesson1_empty_devops_project martinlinxfeld$ terraform apply
+Martin-MacBook-Pro:lesson2_mirrored_github_repo_into_devops_project martinlinxfeld$ terraform apply
 ```
 
 ### Destroy the Deployment
 When you no longer need the deployment, you can run this command to destroy the resources:
 
 ```
-Martin-MacBook-Pro:lesson1_empty_devops_project martinlinxfeld$ terraform destroy
+Martin-MacBook-Pro:lesson2_mirrored_github_repo_into_devops_project martinlinxfeld$ terraform destroy
 ```
 
