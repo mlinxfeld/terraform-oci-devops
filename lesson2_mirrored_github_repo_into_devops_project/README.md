@@ -1,22 +1,20 @@
 # FoggyKitchen OCI DevOps Service with Terraform 
 
-## LESSON 1 - Empty DevOps Project
+## LESSON 2 - Mirror GitHub Repository into DevOps Project
 
-In this first lesson of the OCI DevOps Service course deployed with Terraform, you will learn how to use Terraform to create the foundational components for your DevOps environment. The lesson focuses on creating an empty DevOps project and integrating essential services such as Logging and Notification.
+n the second lesson of the OCI DevOps Service course deployed with Terraform, you will learn how to mirror a GitHub repository into your DevOps project. This lesson focuses on creating an external connection to a GitHub private repository using a Personal Access Token (PAT) stored in OCI Vault.
 
-By following the provided Terraform code, you will be able to provision an empty DevOps project, which serves as a central hub for your software development lifecycle. Additionally, you will configure the Logging service to capture and analyze log data, and set up the Notification service to enable real-time alerts.
+By following the provided Terraform code, you will establish a secure connection between your DevOps project and the GitHub repository. The PAT stored in OCI Vault ensures the authentication and authorization required for accessing the private repository.
 
-To ensure secure access control, this lesson also covers the creation of necessary IAM policies and a Dynamic Group. These policies grant appropriate permissions and the Dynamic Group allows for flexible access management based on dynamic criteria.
+Once the external connection is established, you will proceed to create a mirrored DevOps project repository. This repository serves as a synchronized copy of your GitHub repository. The synchronization occurs periodically based on the scheduler, ensuring that the mirrored repository pulls the latest changes from the GitHub repository.
 
-Completing this lesson will establish the groundwork for the subsequent lessons in the course, where you will delve deeper into automating deployments, managing version control, and utilizing other advanced features of OCI DevOps Service.
+This mirrored repository will play a crucial role in the subsequent lessons, particularly in the build stage of the OCI DevOps Build Pipeline. It provides the necessary source code for building and deploying your applications.
 
-Take the first step towards building your DevOps environment with Terraform and create a solid foundation for streamlined and collaborative software development.
-
-![](terraform-oci-devops-lesson1.png)
+![](terraform-oci-devops-lesson2.png)
 
 ## Deploy Using Oracle Resource Manager
 
-1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/mlinxfeld/terraform-oci-devops/releases/latest/download/terraform-oci-devops-lesson1.zip)
+1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/mlinxfeld/terraform-oci-devops/releases/latest/download/terraform-oci-devops-lesson2.zip)
 
     If you aren't already signed in, when prompted, enter the tenancy and user credentials.
 
@@ -62,6 +60,8 @@ export TF_VAR_user_ocid="ocid1.user.oc1..aaaaaaaaob4qbf27(...)uunizjie4his4vgh3j
 export TF_VAR_fingerprint="85:ee:(...)37:b8:0d:0f:ea"
 export TF_VAR_private_key_path="/home/opc/.oci/oci_api_key.pem"
 export TF_VAR_region="eu-frankfurt-1"
+export TF_VAR_github_pat_vault_secret_id="ocid1.vaultsecret.oc1.eu-frankfurt-1.amaaaaaadngk4gia426(...)ygv5x6ooa"
+export TF_VAR_ocir_vault_secret_id="ocid1.vaultsecret.oc1.eu-frankfurt-1.amaaaaaadngk4giavvri7prkglx7gy5ip73q4(...)anih3lqfxhoa"
 
 Martin-MacBook-Pro:lesson1_empty_devops_project martinlinxfeld$ source setup_oci_tf_vars.sh
 ```
