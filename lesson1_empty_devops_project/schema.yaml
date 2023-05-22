@@ -1,0 +1,55 @@
+title: "FoggyKitchen OCI DevOps Service with Terraform - Lesson 1: Creating an Empty DevOps Project with Logging and Notification Services."
+description: "In this lesson, you will learn to use Terraform to set up an empty DevOps project and integrate essential services like Logging and Notification. This lesson establishes the groundwork for subsequent lessons and ensures a collaborative and monitored environment for your development team."
+stackDescription: "In this lesson, you will learn to use Terraform to set up an empty DevOps project and integrate essential services like Logging and Notification. This lesson establishes the groundwork for subsequent lessons and ensures a collaborative and monitored environment for your development team."
+schemaVersion: 1.1.0
+version: "20201028"
+locale: "en"
+
+variableGroups:
+- title: "General Configuration"
+  visible: false
+  variables:
+  - tenancy_ocid
+  - region
+
+- title: "Required Configuration"
+  visible: true  
+  variables:
+  - compartment_ocid
+  - project_logging_config_retention_period_in_days
+ 
+ variables:
+
+  # General Configuration
+  tenancy_ocid:
+    title: "Tenancy ID"
+    description: "The Oracle Cloud Identifier (OCID) for your tenancy"
+    type: string
+    required: true
+    visibile: false
+
+  region:
+    title: "Region"
+    description: "Choose Region where you deploy your OCI DevOps Project"
+    type: oci:identity:region:name
+    required: true
+    visibile: true
+
+  compartment_ocid:
+    title: "Compartment OCID"
+    description: "Choose Comparment where you deploy your OCI DevOps Project"
+    type: oci:identity:compartment:id
+    required: true
+    visibile: true
+
+  project_logging_config_retention_period_in_days:
+    type: number
+    required: true
+    minimum: 1
+    maximum: 365
+    multipleOf: 1
+    default: 30
+    title: "DevOps Project Logging Config Retention (in days)"
+    description: "Choose number of days for DevOps Project Logging Config Retention."
+
+  
