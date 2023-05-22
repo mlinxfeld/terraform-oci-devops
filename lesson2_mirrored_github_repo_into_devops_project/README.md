@@ -1,6 +1,6 @@
 # FoggyKitchen OCI DevOps Service with Terraform 
 
-## LESSON 2 - Mirror GitHub Repository into DevOps Project
+## LESSON 2 - Mirroring GitHub Repository into DevOps Project
 
 In the second lesson of the OCI DevOps Service course deployed with Terraform, you will learn how to mirror a GitHub repository into your DevOps project. This lesson focuses on creating an external connection to a GitHub private repository using a Personal Access Token (PAT) stored in OCI Vault.
 

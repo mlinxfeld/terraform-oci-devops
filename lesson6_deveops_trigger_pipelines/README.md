@@ -1,6 +1,6 @@
 # FoggyKitchen OCI DevOps Service with Terraform 
 
-## LESSON 6 - Adding Trigger for automated Pipelines start in DevOps Project
+## LESSON 6 - Adding OCI DevOps Trigger - Automating Build and Deploy Pipelines
 
 In the sixth lesson of the OCI DevOps Service course deployed with Terraform, you will further enhance your DevOps project by adding the OCI DevOps Trigger resource. This step focuses on automating the triggering of the Build and Deploy Pipelines based on push operations to the OCI DevOps Repository's main branch.
 

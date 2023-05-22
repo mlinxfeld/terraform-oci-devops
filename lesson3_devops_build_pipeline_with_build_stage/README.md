@@ -1,6 +1,6 @@
 # FoggyKitchen OCI DevOps Service with Terraform 
 
-## LESSON 3 - Build Pipeline with Build Stage in DevOps Project
+## LESSON 3 - Adding OCI DevOps Build Pipeline - Build Stage
 
 In the third lesson of the OCI DevOps Service course deployed with Terraform, you will enhance your DevOps project by adding the OCI DevOps Build Pipeline. This lesson specifically focuses on setting up the first stage of the pipeline - the Build Stage.
 

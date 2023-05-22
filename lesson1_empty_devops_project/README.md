@@ -1,6 +1,6 @@
 # FoggyKitchen OCI DevOps Service with Terraform 
 
-## LESSON 1 - Empty DevOps Project
+## LESSON 1 - Creating an Empty DevOps Project with Logging and Notification Services
 
 In this first lesson of the OCI DevOps Service course deployed with Terraform, you will learn how to use Terraform to create the foundational components for your DevOps environment. The lesson focuses on creating an empty DevOps project and integrating essential services such as Logging and Notification.
 

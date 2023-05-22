@@ -1,6 +1,6 @@
 # FoggyKitchen OCI DevOps Service with Terraform 
 
-## LESSON 4 - Deliver Artifact Stage to Build Pipeline in DevOps Project
+## LESSON 4 - Adding OCI DevOps Build Pipeline - Deliver Artifact Stage
 
 In the fourth lesson of the OCI DevOps Service course deployed with Terraform, you will further enhance your DevOps project by adding the Deliver Artifact Stage to the OCI DevOps Build Pipeline. This stage will produce two important outcomes for deploying your application.
 

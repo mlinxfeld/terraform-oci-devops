@@ -1,6 +1,6 @@
 # FoggyKitchen OCI DevOps Service with Terraform 
 
-## LESSON 5 - Deploy Pipeline added in DevOps Project
+## LESSON 5 - Adding OCI DevOps Deploy Pipeline - Trigger and Helm Deployment
 
 In the fifth lesson of the OCI DevOps Service course deployed with Terraform, you will complete the implementation of your DevOps project by adding the OCI DevOps Deploy Pipeline. This lesson focuses on creating the trigger stage for the Deploy Pipeline and configuring the Helm-based deployment stage.
 
