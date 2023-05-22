@@ -51,5 +51,4 @@ variableGroups:
     default: 30
     title: "OCI DevOps Project Logging Config Retention (in days)"
     description: "Choose number of days for OCI DevOps Project Logging Config Retention."
-
-  
+ 
