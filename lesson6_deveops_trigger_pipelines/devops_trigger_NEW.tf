@@ -1,5 +1,6 @@
 resource "oci_devops_trigger" "FoggyKitchenDevOpsProjectTrigger" {
-    actions {
+   count = var.pipeline_trigger ? 1 : 0  
+   actions {
       build_pipeline_id = oci_devops_build_pipeline.FoggyKitchenDevOpsProjectBuildPipeline.id
       type = "TRIGGER_BUILD_PIPELINE"
 

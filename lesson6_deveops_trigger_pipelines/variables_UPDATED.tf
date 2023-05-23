@@ -96,6 +96,10 @@ variable "cluster_name" {
   default = "FoggyKitchenOKECluster"
 }
 
+variable "pipeline_trigger" {
+  default = true
+}
+
 variable "triggering_branch" {
   default = "main"
 }
