@@ -14,20 +14,41 @@ variableGroups:
   - network_cidrs
 
 - title: "Required Configuration"
-  visible: true  
+  visible: true
   variables:
   - compartment_ocid
   - project_logging_config_retention_period_in_days
   - github_pat_vault_secret_id
+  - ocir_vault_secret_id
+  - show_advanced
+
+- title: "GitHub/OCI DevOps Repository Configuration"
+  visible:
+      and:
+        - show_advanced
+  variables:
   - github_repository_name
   - github_repository_url
-  - ocir_vault_secret_id
+
+- title: "OCI DevOps Artifacts Configuration"
+  visible:
+      and:
+        - show_advanced
+  variables:
   - helm_repo_name
   - release_name
+
  
 variables:
 
   # General Configuration
+  show_advanced:
+    type: boolean
+    title: "Show advanced options?"
+    description: "Shows advanced options."
+    visible: true
+    default: false
+
   tenancy_ocid:
     title: "Tenancy ID"
     description: "The Oracle Cloud Identifier (OCID) for your tenancy"
