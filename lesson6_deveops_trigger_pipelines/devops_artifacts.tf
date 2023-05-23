@@ -24,10 +24,7 @@ resource "oci_devops_deploy_artifact" "FoggyKitchenDevOpsProjectDeployArtifact" 
   }
 }
 
-# Added Artifacts for Helm and Image Container in OCIR.
-
 resource "oci_devops_deploy_artifact" "FoggyKitchenDevOpsProjectDeployHelmArtifact" {
-#  count                      = var.oke_target_environment ? 1 : 0
   provider                   = oci.targetregion
   project_id                 = oci_devops_project.FoggyKitchenDevOpsProject.id
   display_name               = "FoggyKitchenDevOpsProjectDeployArtifact"
@@ -37,13 +34,11 @@ resource "oci_devops_deploy_artifact" "FoggyKitchenDevOpsProjectDeployHelmArtifa
   deploy_artifact_source {
     deploy_artifact_source_type = "HELM_CHART"
     chart_url                   = "oci://${local.ocir_docker_repository}/${local.ocir_namespace}/${var.helm_repo_name}/${var.release_name}/${var.release_name}"
-#    deploy_artifact_version     = "0.1.0-$${BUILDRUN_HASH}"
     deploy_artifact_version     = "0.1.0"
   }
 }
 
 resource "oci_devops_deploy_artifact" "FoggyKitchenDevOpsDeployValuesYamlArtifact" {
-  count                      = var.oke_target_environment ? 1 : 0
   provider                   = oci.targetregion
   argument_substitution_mode = "SUBSTITUTE_PLACEHOLDERS"
   deploy_artifact_type       = "GENERIC_FILE"
