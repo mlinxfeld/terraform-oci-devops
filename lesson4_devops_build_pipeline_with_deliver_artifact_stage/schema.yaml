@@ -1,0 +1,97 @@
+title: "FoggyKitchen OCI DevOps Service with Terraform - Lesson 4: Adding OCI DevOps Build Pipeline - Deliver Artifact Stage."
+description: "In the fourth lesson, you will enhance your DevOps project by adding the Deliver Artifact Stage to the Build Pipeline. This stage produces a Docker image stored in the OCI Registry and constructs a Helm Artifact, including a Helm chart for the deployment."
+stackDescription: "In the fourth lesson, you will enhance your DevOps project by adding the Deliver Artifact Stage to the Build Pipeline. This stage produces a Docker image stored in the OCI Registry and constructs a Helm Artifact, including a Helm chart for the deployment."
+schemaVersion: 1.1.0
+version: "20201028"
+locale: "en"
+
+variableGroups:
+- title: "General Configuration"
+  visible: false
+  variables:
+  - tenancy_ocid
+  - region
+  - network_cidrs
+
+- title: "Required Configuration"
+  visible: true  
+  variables:
+  - compartment_ocid
+  - project_logging_config_retention_period_in_days
+  - github_pat_vault_secret_id
+  - github_repository_name
+  - github_repository_url
+  - ocir_vault_secret_id
+  - helm_repo_name
+  - release_name
+ 
+variables:
+
+  # General Configuration
+  tenancy_ocid:
+    title: "Tenancy ID"
+    description: "The Oracle Cloud Identifier (OCID) for your tenancy"
+    type: string
+    required: true
+    visibile: false
+
+  region:
+    title: "Region"
+    description: "Choose Region for your OCI DevOps Project"
+    type: oci:identity:region:name
+    required: true
+    visibile: true
+
+  compartment_ocid:
+    title: "Compartment OCID"
+    description: "Choose Comparment for your OCI DevOps Project"
+    type: oci:identity:compartment:id
+    required: true
+    visibile: true
+
+  project_logging_config_retention_period_in_days:
+    type: number
+    required: true
+    minimum: 1
+    maximum: 365
+    multipleOf: 1
+    default: 30
+    title: "OCI DevOps Project Logging Config Retention (in days)"
+    description: "Choose number of days for OCI DevOps Project Logging Config Retention."
+
+  github_pat_vault_secret_id:
+    type: string
+    required: true
+    title: "OCI Vault Secret with GitHub PAT"
+    description: "Enter OCI Vault Secret with GitHub Personal Access Token (PAT)."
+
+  github_repository_name:
+    type: string
+    required: true
+    title: "GitHub Repository Name"
+    description: "Enter GitHub Repository Name (will be used for the name of OCI DevOps Repository mirror)."
+
+  github_repository_url:
+    type: string
+    required: true
+    title: "GitHub Repository URL"
+    description: "Enter GitHub Private Repository URL (will be mirrord to OCI DevOps Repository resource)."
+  
+  ocir_vault_secret_id:
+    type: string
+    required: true
+    title: "OCI Vault Secret with OCIR credentials"
+    description: "Enter OCI Vault Secret with OCI Registry (OCIR) credentials (username/password)."
+
+  helm_repo_name:
+    type: string
+    required: true
+    title: "Helm Repository Name"
+    description: "Helm Repository name that will be used to compose URL for pushing helm packages."
+
+  release_name:
+    type: string
+    required: true
+    title: "Helm Release Name"
+    description: "Helm Release name that will be used to compose URL for pushing helm packages."
+
