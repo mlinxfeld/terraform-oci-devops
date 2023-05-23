@@ -269,7 +269,7 @@ variables:
   pipeline_trigger:
     type: boolean
     title: "Automatic Pipeline Trigger?"
-    description: "Check if you want to configure automatic Pipeline Trigger in OCI DevOps Project.."
+    description: "Check if you want to configure automatic Pipeline Trigger in OCI DevOps Project."
     visible: true
     default: true
 
