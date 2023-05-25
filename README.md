@@ -16,7 +16,7 @@ In the second lesson, you will discover how to mirror a GitHub repository into y
 
 [Lesson 3: Adding OCI DevOps Build Pipeline - Build Stage](lesson3_devops_build_pipeline_with_build_stage)
 
-This lesson focuses on implementing the Build Stage of the OCI DevOps Build Pipeline. By defining the compute power and networking details, you will be able to execute the build process based on the build_spec.yaml file and generate a Docker image for your application.
+This lesson focuses on implementing the Build Stage of the OCI DevOps Build Pipeline. By defining the compute power details, you will be able to execute the build process based on the build_spec.yaml file and generate a Docker image for your application.
 
 [Lesson 4: Adding OCI DevOps Build Pipeline - Deliver Artifact Stage](lesson4_devops_build_pipeline_with_deliver_artifact_stage)
 
