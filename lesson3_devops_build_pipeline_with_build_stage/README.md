@@ -6,7 +6,7 @@ In the third lesson of the OCI DevOps Service course deployed with Terraform, yo
 
 By utilizing the provided Terraform code, you will configure the Build Stage to execute the build process defined in the build_spec.yaml file located in your OCI DevOps repository. This specification file contains the necessary instructions, including the Docker command, for building an image based on the Dockerfile.
 
-To execute the Build Stage, you will define the compute power required internally by OCI during the build process. This includes specifying the shape of the compute instance, determining the CPU and memory resources allocated. Additionally, you will instruct OCI on the VCN and subnet where this temporary compute instance will be provisioned during the build stage.
+To execute the Build Stage, you will define the compute power required internally by OCI during the build process. This includes specifying the shape of the compute instance, determining the CPU and memory resources allocated. 
 
 By defining the compute shape and networking details, you ensure that the build process has the necessary resources and connectivity to successfully build the image specified in the build_spec.yaml file.
 
