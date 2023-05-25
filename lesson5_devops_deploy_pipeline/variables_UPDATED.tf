@@ -10,7 +10,6 @@ variable "network_cidrs" {
 
   default = {
     VCN-CIDR                        = "10.20.0.0/16"
-    DEVOPS-BUILD-SUBNET-CIDR        = "10.20.40.0/24"
     NODES-PODS-SUBNET-REGIONAL-CIDR = "10.20.30.0/24"
     LB-SUBNET-REGIONAL-CIDR         = "10.20.20.0/24"
     ENDPOINT-SUBNET-REGIONAL-CIDR   = "10.20.10.0/28"

@@ -1,6 +1,6 @@
 title: "FoggyKitchen OCI DevOps Service with Terraform - Lesson 3: Adding OCI DevOps Build Pipeline - Build Stage."
-description: "This lesson focuses on implementing the Build Stage of the OCI DevOps Build Pipeline. By defining the compute power and networking details, you will be able to execute the build process based on the build_spec.yaml file and generate a Docker image for your application."
-stackDescription: "This lesson focuses on implementing the Build Stage of the OCI DevOps Build Pipeline. By defining the compute power and networking details, you will be able to execute the build process based on the build_spec.yaml file and generate a Docker image for your application."
+description: "This lesson focuses on implementing the Build Stage of the OCI DevOps Build Pipeline. By defining the compute power details, you will be able to execute the build process based on the build_spec.yaml file and generate a Docker image for your application."
+stackDescription: "This lesson focuses on implementing the Build Stage of the OCI DevOps Build Pipeline. By defining the compute power details, you will be able to execute the build process based on the build_spec.yaml file and generate a Docker image for your application."
 schemaVersion: 1.1.0
 version: "20201028"
 locale: "en"
@@ -11,7 +11,6 @@ variableGroups:
   variables:
   - tenancy_ocid
   - region
-  - network_cidrs
 
 - title: "Required Configuration"
   visible: true  
