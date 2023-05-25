@@ -47,6 +47,6 @@ resource "oci_devops_deploy_artifact" "FoggyKitchenDevOpsDeployValuesYamlArtifac
 
   deploy_artifact_source {
     deploy_artifact_source_type = "INLINE"
-    base64encoded_content       = replace(file("${path.module}/manifest/values.yaml"), "<NODE_SERVICE_REPO>", "${local.ocir_docker_repository}/${local.ocir_namespace}/${oci_artifacts_container_repository.FoggyKitchenDevOpsProjectContainerRepository.display_name}")
+    base64encoded_content       = replace(file("${path.module}/manifest/values.yaml"), "<OCIR_REPO>", "${local.ocir_docker_repository}/${local.ocir_namespace}/${oci_artifacts_container_repository.FoggyKitchenDevOpsProjectContainerRepository.display_name}")
   }
 }
