@@ -14,6 +14,7 @@ variableGroups:
   - network_cidrs
   - lb_nsg
   - lb_listener_port
+  - ingress_version
 
 - title: "Required Configuration"
   visible: true

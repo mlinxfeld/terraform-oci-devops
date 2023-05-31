@@ -66,6 +66,11 @@ resource "oci_containerengine_node_pool" "FoggyKitchenOKENodePool" {
   ssh_public_key = tls_private_key.public_private_key_pair.public_key_openssh
 }
 
+resource "local_file" "kubeconfig" {
+  content  = data.oci_containerengine_cluster_kube_config.FoggyKitchenOKEClusterKubeConfig.content
+  filename = "generated/kubeconfig"
+}
+
 resource "oci_devops_deploy_environment" "FoggyKitchenDevOpsOKEEnvironment" {
   count                   = var.oke_target_environment ? 1 : 0
   provider                = oci.targetregion
@@ -74,4 +79,17 @@ resource "oci_devops_deploy_environment" "FoggyKitchenDevOpsOKEEnvironment" {
   deploy_environment_type = "OKE_CLUSTER"
   project_id              = oci_devops_project.FoggyKitchenDevOpsProject.id
   cluster_id              = oci_containerengine_cluster.FoggyKitchenOKECluster[0].id
+}
+
+resource "null_resource" "CreateNamespacesAndSetupIngressNginx" {
+  depends_on = [oci_containerengine_cluster.FoggyKitchenOKECluster, oci_containerengine_node_pool.FoggyKitchenOKENodePool, oci_devops_deploy_environment.FoggyKitchenDevOpsOKEEnvironment]
+   provisioner "local-exec" {
+      command = "echo '(1) Kubeconfig and Namespaces setup: '; export KUBECONFIG=${path.module}/generated/kubeconfig;kubectl create ns ${var.deploy_stage_canary_namespace};kubectl create ns  ${var.deploy_stage_prod_namespace}"
+  }
+  provisioner "local-exec" {
+      command = "echo '(2) Installing IngressNginx: ';export KUBECONFIG=${path.module}/generated/kubeconfig; kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-${var.ingress_version}/deploy/static/provider/cloud/deploy.yaml"
+  }
+   provisioner "local-exec" {
+    command = "echo '(3) Applying IngressNginx Service: ';export KUBECONFIG=${path.module}/generated/kubeconfig; kubectl apply -f ${path.module}/manifest/cloud-generic.yaml"
+  }
 }

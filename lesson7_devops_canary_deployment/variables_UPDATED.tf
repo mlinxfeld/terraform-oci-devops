@@ -110,3 +110,8 @@ variable "percentage_canary_shift" {
 variable "canary_prod_release_count_of_approval" {
   default = 1 
 }
+
+variable "ingress_version" {
+  #default = "v1.1.2"
+  default = "v1.8.0"
+}

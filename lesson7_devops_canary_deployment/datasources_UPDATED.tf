@@ -65,3 +65,7 @@ data "template_file" "FoggyKitchenKubernetesManifest" {
     namespace = "$${namespace}" 
   }
 }
+
+data "oci_containerengine_cluster_kube_config" "FoggyKitchenOKEClusterKubeConfig" {
+  cluster_id = oci_containerengine_cluster.FoggyKitchenOKECluster[0].id
+}
