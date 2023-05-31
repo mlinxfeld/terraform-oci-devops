@@ -1,20 +1,20 @@
 # FoggyKitchen OCI DevOps Service with Terraform 
 
-## LESSON 6 - Adding OCI DevOps Trigger - Automating Build and Deploy Pipelines
+## LESSON 7 - OCI DevOps Canary Deployment
 
-In the sixth lesson of the OCI DevOps Service course deployed with Terraform, you will further enhance your DevOps project by adding the OCI DevOps Trigger resource. This step focuses on automating the triggering of the Build and Deploy Pipelines based on push operations to the OCI DevOps Repository's main branch.
+In our additional lesson, we will dive into advanced deployment strategies by configuring a Canary Deployment pipeline in OCI DevOps Service. This comprehensive lesson covers essential stages to ensure a smooth and controlled deployment process.
 
-By implementing the provided Terraform code, you will configure the Trigger resource to monitor the OCI DevOps Repository. Each commit made to the main branch of the GitHub repository, which is replicated and mirrored in the DevOps Repository, will automatically trigger the Build Pipeline. As a result, the Deploy Pipeline will be initiated in cascade.
+We will start by setting up the Canary Deploy Stage, where a small percentage of traffic will be directed to the new version, allowing for thorough testing and evaluation. Next, we will implement the Traffic Switch Stage, enabling a gradual shift of traffic from the old version to the canary version based on predefined criteria.
 
-This automation eliminates the need for an SRE engineer or any manual intervention to trigger the pipelines. Instead, the pipelines become fully dependent on the changes delivered by developers via Pull Requests merged into the main branch. This streamlines the entire DevOps process and enables seamless integration between development and deployment.
+To maintain control and mitigate risks, we will introduce the Prod Release Approval Stage, where designated approvers can review and provide the green light for the production release. Finally, we will execute the Prod Release Stage to deploy the canary version to the full production environment, ensuring a seamless transition.
 
-With the addition of the OCI DevOps Trigger, your DevOps project becomes fully automated, relying on the continuous delivery of changes to the repositories. Each push operation will trigger the Build Pipeline, which, upon successful completion, will automatically cascade into the Deploy Pipeline. This ensures that your application deployments stay up to date with the latest changes made by the development team.
+By the end of this lesson, you will have a deep understanding of Canary Deployment and the necessary expertise to confidently configure these advanced deployment stages within OCI DevOps Service. Join us on this journey to elevate your deployment practices and optimize your release management.
 
-![](terraform-oci-devops-lesson6.png)
+![](terraform-oci-devops-lesson7.png)
 
 ## Deploy Using Oracle Resource Manager
 
-1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/mlinxfeld/terraform-oci-devops/releases/latest/download/terraform-oci-devops-lesson6.zip)
+1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/mlinxfeld/terraform-oci-devops/releases/latest/download/terraform-oci-devops-lesson7.zip)
 
     If you aren't already signed in, when prompted, enter the tenancy and user credentials.
 
@@ -44,7 +44,7 @@ Martin-MacBook-Pro:~ martinlinxfeld$ git clone https://github.com/mlinxfeld/terr
 
 Martin-MacBook-Pro:~ martinlinxfeld$ cd terraform-oci-devops/
 
-Martin-MacBook-Pro:terraform-oci-devops martinlinxfeld$ cd lesson6_deveops_trigger_pipelines
+Martin-MacBook-Pro:terraform-oci-devops martinlinxfeld$ cd lesson7_deveops_canary_deployment
 
 ```
 
@@ -52,7 +52,7 @@ Martin-MacBook-Pro:terraform-oci-devops martinlinxfeld$ cd lesson6_deveops_trigg
 Create environment file with TF_VARs:
 
 ```
-Martin-MacBook-Pro:lesson6_deveops_trigger_pipelines martinlinxfeld$ vi setup_oci_tf_vars.sh
+Martin-MacBook-Pro:lesson7_deveops_canary_deployment martinlinxfeld$ vi setup_oci_tf_vars.sh
 
 export TF_VAR_tenancy_ocid="ocid1.tenancy.oc1..aaaaaaaasbkty(...)heqzzxn7pe64ksbia"
 export TF_VAR_compartment_ocid="ocid1.compartment.oc1..aaaaaaaaiyy4srmrb32(...)ytywiucgbcp5ext6e4ahjewa"
@@ -63,24 +63,24 @@ export TF_VAR_region="eu-frankfurt-1"
 export TF_VAR_github_pat_vault_secret_id="ocid1.vaultsecret.oc1.eu-frankfurt-1.amaaaaaadngk4gia426(...)ygv5x6ooa"
 export TF_VAR_ocir_vault_secret_id="ocid1.vaultsecret.oc1.eu-frankfurt-1.amaaaaaadngk4giavvri7prkglx7gy5ip73q4(...)anih3lqfxhoa"
 
-Martin-MacBook-Pro:lesson6_deveops_trigger_pipelines martinlinxfeld$ source setup_oci_tf_vars.sh
+Martin-MacBook-Pro:lesson7_deveops_canary_deployment martinlinxfeld$ source setup_oci_tf_vars.sh
 ```
 
 ### Create the Resources
 Run the following commands:
 
 ```
-Martin-MacBook-Pro:lesson6_deveops_trigger_pipelines martinlinxfeld$ terraform init
+Martin-MacBook-Pro:lesson7_deveops_canary_deployment martinlinxfeld$ terraform init
     
-Martin-MacBook-Pro:lesson6_deveops_trigger_pipelines martinlinxfeld$ terraform plan
+Martin-MacBook-Pro:lesson7_deveops_canary_deployment martinlinxfeld$ terraform plan
 
-Martin-MacBook-Pro:lesson6_deveops_trigger_pipelines martinlinxfeld$ terraform apply
+Martin-MacBook-Pro:lesson7_deveops_canary_deployment martinlinxfeld$ terraform apply
 ```
 
 ### Destroy the Deployment
 When you no longer need the deployment, you can run this command to destroy the resources:
 
 ```
-Martin-MacBook-Pro:lesson6_deveops_trigger_pipelines martinlinxfeld$ terraform destroy
+Martin-MacBook-Pro:lesson7_deveops_canary_deployment martinlinxfeld$ terraform destroy
 ```
 
