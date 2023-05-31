@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foggykitchen-oke-canary-app-deployment
+spec:
+  selector:
+    matchLabels:
+      app: foggykitchen-oke-canary-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: foggykitchen-oke-canary-app
+    spec:
+      containers:
+        - name: foggykitchen-oke-canary-app
+          image: ${region}/${name}/${image}:${hash}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+              - cat
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: foggykitchen-oke-canary-app-service
+  annotations: 
+    service.beta.kubernetes.io/oci-load-balancer-shape: "10Mbps"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: foggykitchen-oke-canary-app
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: foggykitchen-oke-canary-app-ing
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: foggykitchen-oke-canary-app-service
+              port:
+                number: 8080
