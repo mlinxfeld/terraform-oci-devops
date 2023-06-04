@@ -96,19 +96,15 @@ variable "triggering_branch" {
   default = "main"
 }
 
-variable "deploy_stage_canary_namespace" {
-  default = "canary-ns"
+variable "deploy_stage_green_namespace" {
+  default = "green-ns"
 }
 
-variable "deploy_stage_prod_namespace" {
-  default = "prod-ns"
+variable "deploy_stage_blue_namespace" {
+  default = "blue-ns"
 }
 
-variable "percentage_canary_shift" {
-  default = 25 
-}
-
-variable "canary_prod_release_count_of_approval" {
+variable "bluegreen_prod_release_count_of_approval" {
   default = 1 
 }
 
