@@ -28,7 +28,15 @@ The fifth lesson covers the creation of the OCI DevOps Deploy Pipeline. By confi
 
 [Lesson 6: Adding OCI DevOps Trigger - Automating Build and Deploy Pipelines](lesson6_deveops_trigger_pipelines)
 
-In the final lesson, you will automate the triggering of the Build and Deploy Pipelines by adding the OCI DevOps Trigger. Based on push operations to the OCI DevOps Repository's main branch, the pipelines will automatically initiate, eliminating the need for manual intervention.
+In the sixth lesson, you will automate the triggering of the Build and Deploy Pipelines by adding the OCI DevOps Trigger. Based on push operations to the OCI DevOps Repository's main branch, the pipelines will automatically initiate, eliminating the need for manual intervention.
+
+[Lesson 7: OCI DevOps Canary Deployment](lesson7_devops_canary_deployment)
+
+In our seventh lesson, we will dive into advanced deployment strategies by configuring a Canary Deployment pipeline in OCI DevOps Service. Canary Deployment gradually introduces a new version alongside the existing production version, routing a small portion of the traffic to evaluate its performance and stability before wider adoption.
+
+[Lesson 8: OCI DevOps Blue-Green Deployment](lesson8_devops_bluegreen_deployment)
+
+In our eighth lesson, we will explore advanced deployment strategies by configuring a Blue-Green Deployment pipeline in OCI DevOps Service. Blue-Green Deployment involves creating two independent environments: the existing production environment (blue) and the new version environment (green), with an instant switch of traffic between the two for seamless deployment without downtime.
 
 By completing this course, you will have gained the knowledge and skills to establish a robust DevOps workflow using OCI DevOps Service and Terraform. You will be able to efficiently build, deliver, and deploy your applications, ensuring a seamless integration between development and operations within the Oracle Cloud Infrastructure environment.
 

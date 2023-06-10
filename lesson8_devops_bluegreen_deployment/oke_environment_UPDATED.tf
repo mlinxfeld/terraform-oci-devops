@@ -1,0 +1,95 @@
+resource "oci_containerengine_cluster" "FoggyKitchenOKECluster" {
+  count              = var.oke_target_environment ? 1 : 0
+  provider           = oci.targetregion
+  compartment_id     = oci_identity_compartment.FoggyKitchenCompartment.id
+  kubernetes_version = var.kubernetes_version
+  name               = var.cluster_name
+  vcn_id             = oci_core_virtual_network.FoggyKitchenOKEVCN[0].id
+
+  endpoint_config {
+    is_public_ip_enabled = true
+    subnet_id            = oci_core_subnet.FoggyKitchenOKEAPIEndpointSubnet[0].id
+    nsg_ids              = [oci_core_network_security_group.FoggyKitchenOKENSG[0].id]
+  }
+
+  options {
+    service_lb_subnet_ids = [oci_core_subnet.FoggyKitchenOKELBSubnet[0].id]
+
+    add_ons {
+      is_kubernetes_dashboard_enabled = true
+      is_tiller_enabled               = true
+    }
+  }
+}
+
+resource "oci_containerengine_node_pool" "FoggyKitchenOKENodePool" {
+  count              = var.oke_target_environment ? 1 : 0
+  provider           = oci.targetregion
+  cluster_id         = oci_containerengine_cluster.FoggyKitchenOKECluster[0].id
+  compartment_id     = oci_identity_compartment.FoggyKitchenCompartment.id
+  kubernetes_version = var.kubernetes_version
+  name               = "FoggyKitchenOKENodePool"
+  node_shape         = var.oke_node_shape
+
+  node_source_details {
+    image_id    = local.oracle_linux_images[0]
+    source_type = "IMAGE"
+    boot_volume_size_in_gbs = var.oke_node_boot_volume_size_in_gbs
+  }
+
+  dynamic "node_shape_config" {
+    for_each = local.is_flexible_node_shape ? [1] : []
+    content {
+      memory_in_gbs = var.flex_shape_memory
+      ocpus         = var.flex_shape_ocpus
+    }
+  }
+
+  node_config_details {
+    dynamic "placement_configs" {
+      iterator = pc_iter
+      for_each = data.oci_identity_availability_domains.ADs.availability_domains
+      content {
+        availability_domain = pc_iter.value.name
+        subnet_id           = oci_core_subnet.FoggyKitchenOKENodesPodsSubnet[0].id
+      }
+    }
+    size = var.node_pool_size
+    
+  }
+  
+  initial_node_labels {
+    key   = "key"
+    value = "value"
+  }
+
+  ssh_public_key = tls_private_key.public_private_key_pair.public_key_openssh
+}
+
+resource "local_file" "kubeconfig" {
+  content  = data.oci_containerengine_cluster_kube_config.FoggyKitchenOKEClusterKubeConfig.content
+  filename = "generated/kubeconfig"
+}
+
+resource "oci_devops_deploy_environment" "FoggyKitchenDevOpsOKEEnvironment" {
+  count                   = var.oke_target_environment ? 1 : 0
+  provider                = oci.targetregion
+  display_name            = "FoggyKitchenDevOpsOKEEnvironment"
+  description             = "FoggyKitchen DevOps OKE Environment"
+  deploy_environment_type = "OKE_CLUSTER"
+  project_id              = oci_devops_project.FoggyKitchenDevOpsProject.id
+  cluster_id              = oci_containerengine_cluster.FoggyKitchenOKECluster[0].id
+}
+
+resource "null_resource" "CreateNamespacesAndSetupIngressNginx" {
+  depends_on = [oci_containerengine_cluster.FoggyKitchenOKECluster, oci_containerengine_node_pool.FoggyKitchenOKENodePool, oci_devops_deploy_environment.FoggyKitchenDevOpsOKEEnvironment]
+   provisioner "local-exec" {
+      command = "echo '(1) Kubeconfig and Namespaces setup: '; export KUBECONFIG=${path.module}/generated/kubeconfig;kubectl create ns ${var.deploy_stage_blue_namespace};kubectl create ns  ${var.deploy_stage_green_namespace}"
+  }
+  provisioner "local-exec" {
+      command = "echo '(2) Installing IngressNginx: ';export KUBECONFIG=${path.module}/generated/kubeconfig; kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-${var.ingress_version}/deploy/static/provider/cloud/deploy.yaml"
+  }
+   provisioner "local-exec" {
+    command = "echo '(3) Applying IngressNginx Service: ';export KUBECONFIG=${path.module}/generated/kubeconfig; kubectl apply -f ${path.module}/manifest/cloud-generic.yaml"
+  }
+}

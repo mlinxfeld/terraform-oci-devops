@@ -1,0 +1,294 @@
+title: "FoggyKitchen OCI DevOps Service with Terraform - Lesson 8: Blue-Green Deployment."
+description: "In the additional lesson, you will configure Deploy Pipeline with Blue-Green Deployment capabilites covering BlueGreen Deploy Stage, Prod Release Approval Stage and ultimately Traffic Swtich Stage."
+stackDescription: "In the additional lesson, you will configure Deploy Pipeline with Blue-Green Deployment capabilites covering BlueGreen Deploy Stage, Prod Release Approval Stage and ultimately Traffic Swtich Stage."
+schemaVersion: 1.1.0
+version: "20201028"
+locale: "en"
+
+variableGroups:
+- title: "General Configuration"
+  visible: false
+  variables:
+  - tenancy_ocid
+  - region
+  - network_cidrs
+  - lb_nsg
+  - lb_listener_port
+  - ingress_version
+
+- title: "Required Configuration"
+  visible: true
+  variables:
+  - compartment_ocid
+  - project_logging_config_retention_period_in_days
+  - github_pat_vault_secret_id
+  - ocir_vault_secret_id
+  - oke_target_environment
+  - pipeline_trigger
+  - show_advanced
+
+- title: "GitHub/OCI DevOps Repository Configuration"
+  visible:
+      and:
+        - show_advanced
+  variables:
+  - github_repository_name
+  - github_repository_url
+
+- title: "OCI DevOps Trigger Configuration"
+  visible:
+      and:
+        - show_advanced
+        - pipeline_trigger
+  variables:
+  - triggering_branch
+
+- title: "OCI DevOps Blue-Green Deployment Configuration"
+  visible:
+      and:
+        - show_advanced
+  variables:
+  - deploy_stage_blue_namespace
+  - deploy_stage_green_namespace
+  - bluegreen_prod_release_count_of_approval 
+
+- title: "OCI Container Engine for Kubernetes Configuration"
+  visible:
+      and:
+        - show_advanced
+        - oke_target_environment
+  variables:
+  - cluster_name
+  - kubernetes_version 
+  - availablity_domain_name 
+  - oke_node_shape
+  - flex_shape_memory
+  - flex_shape_ocpus
+  - oke_node_os_version
+  - node_pool_size
+  - oke_node_boot_volume_size_in_gbs
+ 
+variables:
+
+  # General Configuration
+  show_advanced:
+    type: boolean
+    title: "Show advanced options?"
+    description: "Shows advanced options."
+    visible: true
+    default: false
+
+  tenancy_ocid:
+    title: "Tenancy ID"
+    description: "The Oracle Cloud Identifier (OCID) for your tenancy"
+    type: string
+    required: true
+    visibile: false
+
+  region:
+    title: "Region"
+    description: "Choose Region for your OCI DevOps Project"
+    type: oci:identity:region:name
+    required: true
+    visibile: true
+
+  compartment_ocid:
+    title: "Compartment OCID"
+    description: "Choose Comparment for your OCI DevOps Project"
+    type: oci:identity:compartment:id
+    required: true
+    visibile: true
+
+  project_logging_config_retention_period_in_days:
+    type: number
+    required: true
+    minimum: 1
+    maximum: 365
+    multipleOf: 1
+    default: 30
+    title: "OCI DevOps Project Logging Config Retention (in days)"
+    description: "Choose number of days for OCI DevOps Project Logging Config Retention."
+
+  github_pat_vault_secret_id:
+    type: string
+    required: true
+    title: "OCI Vault Secret with GitHub PAT"
+    description: "Enter OCI Vault Secret with GitHub Personal Access Token (PAT)."
+
+  github_repository_name:
+    type: string
+    required: true
+    title: "GitHub Repository Name"
+    description: "Enter GitHub Repository Name (will be used for the name of OCI DevOps Repository mirror)."
+
+  github_repository_url:
+    type: string
+    required: true
+    title: "GitHub Repository URL"
+    description: "Enter GitHub Private Repository URL (will be mirrord to OCI DevOps Repository resource)."
+  
+  ocir_vault_secret_id:
+    type: string
+    required: true
+    title: "OCI Vault Secret with OCIR credentials"
+    description: "Enter OCI Vault Secret with OCI Registry (OCIR) credentials (username/password)."
+
+  deploy_stage_blue_namespace:
+    type: string
+    required: true
+    title: "OKE namespace for Blue deployment"
+    description: "Enter OKE namespace for Blue deployment."
+
+  deploy_stage_green_namespace:
+    type: string
+    required: true
+    title: "OKE namespace for Green deployment"
+    description: "Enter OKE namespace for Green deployment."
+
+  bluegreen_prod_release_count_of_approval:
+    type: number
+    required: false
+    minimum: 1
+    maximum: 5
+    multipleOf: 1
+    default: 1
+    title: "Count of Approval for Blue-Green release"
+    description: "Choose number for count of Approval for Blue-Green release."
+
+
+  oke_target_environment: 
+    type: boolean
+    title: "Deploy OKE Cluster/DevOps Environment?"
+    description: "Check if you want to deploy OCI DevOps Target Environment with OKE Cluster."
+    visible: true
+    default: true
+
+  cluster_name:
+    type: string
+    required: false
+    title: "OKE Cluster Name"
+    description: "Enter OKE Cluster Name that will be created as OCI DevOps Target Environment."
+
+  kubernetes_version:
+    type: enum
+    title: "K8S Version for OKE Cluster/Nodepool"
+    description: "Choose Kubernetes (K8S) version for OKE Cluster/Nodepool"
+    default: "v1.26.2"
+    required: false
+    enum: 
+      - "v1.26.2"
+      - "v1.25.4"
+      - "v1.24.1"
+
+  availablity_domain_name:
+    type: oci:identity:availabilitydomain:name
+    visibile: true
+    title: "Availability Domain"
+    description: "Choose Availability Domain where K8S Nodes will be deployed."
+    dependsOn:
+      regionName: ${region}
+      compartmentId: ${compartment_ocid}
+
+  oke_node_shape:
+    type: oci:core:instanceshape:name
+    title: "K8S Nodes Shape of OKE Nodepool"
+    description: "Choose a shape for your K8S nodes in OKE Nodepool."
+    default: "VM.Standard.E4.Flex"
+    required: false
+    dependsOn:
+      compartmentId: ${compartment_ocid}
+
+  flex_shape_memory:
+    type: number
+    required: false
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 6
+    title: "K8S Nodes Flex Shape Memory (GB)"
+    description: "Choose number GB for Flex Shape Memory."
+    visible:
+      and:
+        - or:
+          - eq:
+            - oke_node_shape 
+            - "VM.Standard.E3.Flex"
+          - eq:
+            - oke_node_shape
+            - "VM.Standard.E4.Flex"
+          - eq:
+            - oke_node_shape 
+            - "VM.Standard.A1.Flex"
+          - eq:
+            - oke_node_shape 
+            - "VM.Optimized3.Flex"
+
+  flex_shape_ocpus:
+    type: number
+    required: false
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 1
+    title: "K8S Nodes Flex Shape OCPUs"
+    description: "Choose number of OCPUs for Flex Shape."
+    visible:
+      and:
+        - or:
+          - eq:
+            - oke_node_shape 
+            - "VM.Standard.E3.Flex"
+          - eq:
+            - oke_node_shape 
+            - "VM.Standard.E4.Flex"
+          - eq:
+            - oke_node_shape 
+            - "VM.Standard.A1.Flex"
+          - eq:
+            - oke_node_shape 
+            - "VM.Optimized3.Flex"
+
+  oke_node_os_version:
+    type: enum
+    required: false
+    visible: true
+    title: "OKE Node OS version"
+    description: "Choose Operating System version that determines the operating system version for OKE Nodes."
+    default: "8.7"
+    enum:
+      - "7.9"  
+      - "8.7"
+
+  node_pool_size:
+    type: number
+    required: false
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 3
+    title: "How many K8S Nodes in OKE Cluster?"
+    description: "Choose number of K8S Nodes to be deployed in OKE Cluster."
+
+  oke_node_boot_volume_size_in_gbs:
+    type: number
+    required: false
+    minimum: 1
+    maximum: 256
+    multipleOf: 1
+    default: 50
+    title: "What is the size of K8S node boot block volume (GB)?"
+    description: "Choose number of GB for the size of K8S node boot block volume."
+
+  pipeline_trigger:
+    type: boolean
+    title: "Automatic Pipeline Trigger?"
+    description: "Check if you want to configure automatic Pipeline Trigger in OCI DevOps Project."
+    visible: true
+    default: true
+
+  triggering_branch:
+    type: string
+    required: false
+    title: "OCI DevOps Repository branch"
+    description: "Define OCI DevOps Repository branch for Trigger."
+
