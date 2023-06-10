@@ -54,10 +54,10 @@ variable "availablity_domain_name" {
 }
 
 variable "kubernetes_version" {
-  default = "v1.23.4"
-  #default = "v1.26.2"
+  default = "v1.26.2"
   #default = "v1.25.4"
   #default = "v1.24.1"
+  #default = "v1.23.4"
 }
 
 variable "node_pool_size" {
