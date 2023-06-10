@@ -93,7 +93,7 @@ variable "pipeline_trigger" {
 }
 
 variable "triggering_branch" {
-  default = "main"
+  default = "master"
 }
 
 variable "deploy_stage_canary_namespace" {
