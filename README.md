@@ -4,7 +4,7 @@
 
 The OCI DevOps Service with Terraform course provides a comprehensive guide to implementing a robust DevOps workflow using Oracle Cloud Infrastructure (OCI) and Terraform. Through a series of six lessons, you will learn how to leverage OCI DevOps Service and Terraform to automate the build, delivery, and deployment of your applications.
 
-By completing this course, you will have gained the knowledge and skills to establish a robust DevOps workflow using OCI DevOps Service and Terraform. You will be able to efficiently build, deliver, and deploy your applications, ensuring a seamless integration between development and operations within the Oracle Cloud Infrastructure environment.
+By completing [this course](https://foggykitchen.com/courses/oci-devops-service-with-terraform/), you will have gained the knowledge and skills to establish a robust DevOps workflow using OCI DevOps Service and Terraform. You will be able to efficiently build, deliver, and deploy your applications, ensuring a seamless integration between development and operations within the Oracle Cloud Infrastructure environment.
 
 ![](lesson6_deveops_trigger_pipelines/terraform-oci-devops-lesson6.png)
 
