@@ -60,10 +60,6 @@ resource "oci_devops_build_pipeline_stage" "FoggyKitchenDevOpsProjectBuildPipeli
   }
 }
 
-# 
-# Added new stage to Build Pipeline - triggering Deploy Pipeline.
-#
-
 resource "oci_devops_build_pipeline_stage" "FoggyKitchenDevOpsProjectBuildPipelineDeployStage" {
   provider   = oci.targetregion
   depends_on = [oci_devops_build_pipeline_stage.FoggyKitchenDevOpsProjectBuildPipelineDeliverArtifactStage]
